@@ -80,6 +80,7 @@ function startGame() {
     document.getElementById("stand").addEventListener("click", stand);
 }
 
+// Deals a card to the player
 function hit() {
     if (canHit) {
         let cardImg = document.createElement("img");
