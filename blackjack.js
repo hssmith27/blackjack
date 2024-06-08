@@ -1,20 +1,21 @@
 // Tracks current hand values
 var dealerSum = 0;
-var yourSum = 0;
+var playerSum = 0;
 
 // Tracked since Aces can be treated as 1 or 11
 var dealerAceCount = 0;
-var yourAceCount = 0;
+var playerAceCount = 0;
 
 var hidden;
 var deck;
 
-// Allows player to draw while yourSum <= 21
+// Allows player to draw while playerSum <= 21
 var canHit = true;
 
 window.onload = function() {
     buildDeck();
     shuffleDeck();
+    setUpBoard();
     startGame();
 }
 
@@ -41,29 +42,40 @@ function shuffleDeck() {
     }
 }
 
-function startGame() {
+// Sets up the board by dealing the player and dealer two cards each
+function setUpBoard() {
+    // Hidden dealer card
     hidden = deck.pop();
     dealerSum += getValue(hidden);
     dealerAceCount += checkAce(hidden);
 
-    while (dealerSum < 17) {
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        cardImg.src = "./card-images/" + card + ".png";
+    // Revealed dealer card
+    deal(true);
+
+    // Player Starting Cards
+    for (let i = 0; i < 2; i++ ) {
+        deal(false);
+    }
+}
+
+// If isDealer is true, deals a card to the dealer, otherwise to the player
+function deal(isDealer) {
+    let cardImg = document.createElement("img");
+    let card = deck.pop();
+    cardImg.src = "./card-images/" + card + ".png";
+    if (isDealer) {
         dealerSum += getValue(card);
         dealerAceCount += checkAce(card);
         document.getElementById("dealer-cards").append(cardImg);
     }
-
-    for (let i = 0; i < 2; i++ ) {
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        cardImg.src = "./card-images/" + card + ".png";
-        yourSum += getValue(card);
-        yourAceCount+= checkAce(card);
-        document.getElementById("your-cards").append(cardImg);
+    else {
+        playerSum += getValue(card);
+        playerAceCount+= checkAce(card);
+        document.getElementById("player-cards").append(cardImg);
     }
+}
 
+function startGame() {
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
 }
@@ -73,36 +85,36 @@ function hit() {
         let cardImg = document.createElement("img");
         let card = deck.pop();
         cardImg.src = "./card-images/" + card + ".png";
-        yourSum += getValue(card);
-        yourAceCount+= checkAce(card);
-        document.getElementById("your-cards").append(cardImg);
+        playerSum += getValue(card);
+        playerAceCount+= checkAce(card);
+        document.getElementById("player-cards").append(cardImg);
     }
 
-    if (reduceAce(yourSum, yourAceCount) > 21) {
+    if (reduceAce(playerSum, playerAceCount) > 21) {
         canHit = false;
     }
 }
 
 function stand() {
     dealerSum = reduceAce(dealerSum, dealerAceCount);
-    yourSum = reduceAce(yourSum, yourAceCount);
+    playerSum = reduceAce(playerSum, playerAceCount);
 
     canHit = false;
     document.getElementById("hidden").src = "./card-images/" + hidden + ".png";
 
     let message = "";
 
-    if (yourSum > 21) { 
+    if (playerSum > 21) { 
         message = "You Busted!";
     }
     else if (dealerSum > 21) {
         message = "Dealer Busted!";
     }
     else {
-        if (yourSum == dealerSum) {
+        if (playerSum == dealerSum) {
             message = "Tie, Dealer Wins";
         }
-        else if (yourSum < dealerSum) {
+        else if (playerSum < dealerSum) {
             message = "You Lose.";
         }
         else {
@@ -111,7 +123,7 @@ function stand() {
     }
 
     document.getElementById("dealer-sum").innerText = dealerSum;
-    document.getElementById("your-sum").innerText = yourSum;
+    document.getElementById("player-sum").innerText = playerSum;
     document.getElementById("results").innerText = message;
 }
 
