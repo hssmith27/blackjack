@@ -104,26 +104,6 @@ function startGame() {
 }
 
 /**
- * Deals a card to the player
- */
-function hit() {
-    if (canHit) {
-        deal(false);
-    }
-    if (reduceAce(playerSum, playerAceCount) > 21) {
-        canHit = false;
-    }
-}
-
-/**
- * Calls for the dealer to take their actions and
- * end the game
- */
-function stand() {
-    goDealer();
-    evaluateGame();
-}
-/**
  * Dealer reveals their hidden and draws until they have 
  * a hand sum of at least 17
  */
