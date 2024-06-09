@@ -6,12 +6,14 @@ function evaluateGame() {
     playerSum = reduceAce(playerSum, playerAceCount);
     canHit = false;
     let message = "";
+    var playerWon = false;
 
     if (playerSum > 21) { 
         message = "You Busted!";
     }
     else if (dealerSum > 21) {
         message = "Dealer Busted!";
+        playerWon = true;
     }
     else {
         if (playerSum == dealerSum) {
@@ -22,12 +24,18 @@ function evaluateGame() {
         }
         else {
             message = "You Win.";
+            playerWon = true;
         }
     }
 
     document.getElementById("dealer-sum").innerText = dealerSum;
     document.getElementById("player-sum").innerText = playerSum;
     document.getElementById("results").innerText = message;
+
+    if (playerWon) {
+        chips += 2 * bet;
+        document.getElementById("chip-count").innerText = chips;
+    }
 }
 
 /**

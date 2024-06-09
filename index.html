@@ -11,19 +11,20 @@
     </head>
 
     <body>
+        <h2>Chip Count: <span id = chip-count></span></h3>
         <h2>Dealer: <span id = "dealer-sum"></span></h2>
-        <div id = "dealer-cards">
-            <img id = "hidden" src = "./card-images/BACK.png">
-        </div>
+        <div id = "dealer-cards" class = "cards"></div>
 
         <h2>You: <span id = "player-sum"></span></h2>
-        <div id = "player-cards"></div>
+        <div id = "player-cards" class = "cards"></div>
 
         <br>
         <button id = "hit" class = "game-action">Hit</button>
         <button id = "stand" class = "game-action">Stand</button>
         <button id = "split" class = "game-action">Split</button>
         <button id = "double-down" class = "game-action">Double</button>
+        <button id = "restart" class = "game-action">Restart</button>
+        <br>
         <p id = "results"></p>
     </body>
 </html>

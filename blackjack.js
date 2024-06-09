@@ -15,10 +15,21 @@ var deck;
 // Allows player to draw while playerSum <= 21
 var canHit = true;
 
+// Chip count and bid
+var chips = 1000;
+var bet = 0;
+
 // Sets up the deck and game
 window.onload = function() {
+    gameLoop();
+}
+
+// Calls the main loop for the game
+function gameLoop() {
+    document.getElementById("chip-count").innerText = chips;
     buildDeck();
     shuffleDeck();
+    placeBets();
     setUpBoard();
     startGame();
 }
@@ -50,14 +61,24 @@ function shuffleDeck() {
     }
 }
 
+function placeBets() {
+    bet = prompt("How many chips would you like to bet?")
+    chips -= bet;
+    document.getElementById("chip-count").innerText = chips;
+}
+
 /**
  * Sets up the board by dealing the player and dealer two cards each
  */ 
 function setUpBoard() {
     // Hidden dealer card
+    let hiddenImg = document.createElement("img");
+    hiddenImg.src = "./card-images/BACK.png";
+    hiddenImg.id = "hidden";
     hidden = deck.pop();
     dealerSum += getValue(hidden);
     dealerAceCount += checkAce(hidden);
+    document.getElementById("dealer-cards").append(hiddenImg)
 
     // Revealed dealer card
     deal(true);
@@ -95,6 +116,7 @@ function deal(isDealer) {
 function startGame() {
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
+    document.getElementById("restart").addEventListener("click", restart);
 
     // Ends the game if either player starts with 21
     if (dealerSum == 21 || playerSum == 21) {
@@ -112,4 +134,23 @@ function goDealer() {
     while (dealerSum < 17) {
         deal(true);
     }
+}
+
+/**
+ * Resets variables besides chip counts to zero
+ */
+function reset() {
+    dealerSum = 0;
+    playerSum = 0;
+    dealerAceCount = 0;
+    playerAceCount = 0;
+    hidden = null;
+    deck = null;
+    canHit = true;
+
+    document.getElementById("dealer-cards").innerHTML = "";
+    document.getElementById("player-cards").innerHTML = "";
+    document.getElementById("player-sum").innerHTML = "";
+    document.getElementById("dealer-sum").innerHTML = "";
+    document.getElementById("results").innerHTML = "";
 }

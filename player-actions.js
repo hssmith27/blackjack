@@ -18,3 +18,11 @@ function stand() {
     goDealer();
     evaluateGame();
 }
+
+/**
+ * Restarts the game, does not change chip count
+ */
+function restart() {
+    reset();
+    gameLoop();
+}
