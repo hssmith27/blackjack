@@ -6,12 +6,16 @@ var playerSum = 0;
 var dealerAceCount = 0;
 var playerAceCount = 0;
 
+// Hidden card for dealer
 var hidden;
+
+// Deck of cards
 var deck;
 
 // Allows player to draw while playerSum <= 21
 var canHit = true;
 
+// Sets up the deck and game
 window.onload = function() {
     buildDeck();
     shuffleDeck();
@@ -19,7 +23,9 @@ window.onload = function() {
     startGame();
 }
 
-// Initializes an array of all 52 cards
+/**
+ * Initializes an array of all 52 cards
+ */
 function buildDeck() {
     let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
     let types = ["C", "D", "H", "S"];
@@ -32,7 +38,9 @@ function buildDeck() {
     }
 }
 
-// Shuffles the deck
+/**
+ * Shuffles the deck
+ */
 function shuffleDeck() {
     for (let i = 0; i < deck.length; i++) {
         let j = Math.floor(Math.random() * deck.length);
@@ -42,7 +50,9 @@ function shuffleDeck() {
     }
 }
 
-// Sets up the board by dealing the player and dealer two cards each
+/**
+ * Sets up the board by dealing the player and dealer two cards each
+ */ 
 function setUpBoard() {
     // Hidden dealer card
     hidden = deck.pop();
@@ -58,11 +68,15 @@ function setUpBoard() {
     }
 }
 
-// If isDealer is true, deals a card to the dealer, otherwise to the player
+/**
+ * Deals a card to the dealer or player
+ * @param {*} isDealer if true, deals a card to the dealer, otherwise to the player
+ */
 function deal(isDealer) {
     let cardImg = document.createElement("img");
     let card = deck.pop();
     cardImg.src = "./card-images/" + card + ".png";
+
     if (isDealer) {
         dealerSum += getValue(card);
         dealerAceCount += checkAce(card);
@@ -75,34 +89,58 @@ function deal(isDealer) {
     }
 }
 
+/**
+ * Allows the player to begin interacting
+ */
 function startGame() {
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
+
+    // Ends the game if either player starts with 21
+    if (dealerSum == 21 || playerSum == 21) {
+        goDealer();
+        evaluateGame();
+    }
 }
 
-// Deals a card to the player
+/**
+ * Deals a card to the player
+ */
 function hit() {
     if (canHit) {
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        cardImg.src = "./card-images/" + card + ".png";
-        playerSum += getValue(card);
-        playerAceCount+= checkAce(card);
-        document.getElementById("player-cards").append(cardImg);
+        deal(false);
     }
-
     if (reduceAce(playerSum, playerAceCount) > 21) {
         canHit = false;
     }
 }
 
+/**
+ * Calls for the dealer to take their actions and
+ * end the game
+ */
 function stand() {
+    goDealer();
+    evaluateGame();
+}
+/**
+ * Dealer reveals their hidden and draws until they have 
+ * a hand sum of at least 17
+ */
+function goDealer() {
+    document.getElementById("hidden").src = "./card-images/" + hidden + ".png";
+    while (dealerSum < 17) {
+        deal(true);
+    }
+}
+
+/**
+ * Evaluates the winner of the game
+ */
+function evaluateGame() {
     dealerSum = reduceAce(dealerSum, dealerAceCount);
     playerSum = reduceAce(playerSum, playerAceCount);
-
     canHit = false;
-    document.getElementById("hidden").src = "./card-images/" + hidden + ".png";
-
     let message = "";
 
     if (playerSum > 21) { 
@@ -128,6 +166,13 @@ function stand() {
     document.getElementById("results").innerText = message;
 }
 
+/**
+ * Returns the number value of a card
+ * Number cards return their own value
+ * Face cards return 10, and aces return 11
+ * @param {*} card the card whose number value is returned
+ * @returns the number value of a given card
+ */
 function getValue(card) {
     let data = card.split("-");
     let value = data[0];
@@ -144,6 +189,11 @@ function getValue(card) {
     return parseInt(value);
 }
 
+/**
+ * Returns whether a card is an ace
+ * @param {*} card the card being checked if it is an ace
+ * @returns 1 if a card is an ace, 0 otherwise
+ */
 function checkAce(card) {
     if (card[0] == "A") {
         return 1;
@@ -151,10 +201,17 @@ function checkAce(card) {
     return 0;
 }
 
-function reduceAce(playerSum, playerAceCount) {
-    while (playerSum > 21 && playerAceCount > 0) {
-        playerSum -= 10;
-        playerAceCount -= 1;
+/**
+ * Reduces ace values to 1 until the player's sum is 
+ * less than or equal to 21
+ * @param {*} sum the total point value of a player's hand
+ * @param {*} aceCount the number of aces a player has
+ * @returns the reduced sum based on the number of aces a player has
+ */
+function reduceAce(sum, aceCount) {
+    while (sum > 21 && aceCount > 0) {
+        sum -= 10;
+        aceCount -= 1;
     }
-    return playerSum;
+    return sum;
 }
