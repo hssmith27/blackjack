@@ -13,6 +13,7 @@ var hidden;
 var deck;
 
 var canHit = true;
+var canSplit = false;
 var canDoubleDown = true;
 
 // Chip count and bid
@@ -61,8 +62,14 @@ function shuffleDeck() {
     }
 }
 
+/**
+ * Prompts the user to enter their chip bid
+ */
 function placeBets() {
     bet = prompt("How many chips would you like to bet?")
+    while (bet > chips) {
+        bet = prompt("How many chips would you like to bet?")
+    }
     chips -= bet;
     document.getElementById("chip-count").innerText = chips;
 }
@@ -104,8 +111,11 @@ function deal(isDealer) {
         document.getElementById("dealer-cards").append(cardImg);
     }
     else {
+        if (deck.length == 49 && getValue(card) == getValue(deck.at(0))) {
+            canSplit = true;
+        }
         playerSum += getValue(card);
-        playerAceCount+= checkAce(card);
+        playerAceCount += checkAce(card);
         document.getElementById("player-cards").append(cardImg);
     }
 }
@@ -116,6 +126,7 @@ function deal(isDealer) {
 function startGame() {
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
+    document.getElementById("split").addEventListener("click", split);
     document.getElementById("double-down").addEventListener("click", doubleDown);
     document.getElementById("restart").addEventListener("click", restart);
 
@@ -148,7 +159,7 @@ function reset() {
     hidden = null;
     deck = null;
     canHit = true;
-    doubleDown = true;
+    canDoubleDown = true;
 
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("player-cards").innerHTML = "";

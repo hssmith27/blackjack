@@ -20,6 +20,16 @@ function stand() {
 }
 
 /**
+ * A player can split two identical value cards
+ * into two separate hands when they are initially dealt
+ */
+function split() {
+    if (canSplit) {
+        canSplit = false;111
+    }
+}
+
+/**
  * Causes the player to double down, can only be done
  * after the first dealing
  */
