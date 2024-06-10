@@ -20,6 +20,21 @@ function stand() {
 }
 
 /**
+ * Causes the player to double down, can only be done
+ * after the first dealing
+ */
+function doubleDown() {
+    if (canDoubleDown) {
+        chips -= bet;
+        document.getElementById("chip-count").innerText = chips;
+        bet *= 2;
+        canHit = false;
+        deal(false);
+        stand();
+    }
+}
+
+/**
  * Restarts the game, does not change chip count
  */
 function restart() {

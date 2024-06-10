@@ -12,8 +12,8 @@ var hidden;
 // Deck of cards
 var deck;
 
-// Allows player to draw while playerSum <= 21
 var canHit = true;
+var canDoubleDown = true;
 
 // Chip count and bid
 var chips = 1000;
@@ -116,6 +116,7 @@ function deal(isDealer) {
 function startGame() {
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
+    document.getElementById("double-down").addEventListener("click", doubleDown);
     document.getElementById("restart").addEventListener("click", restart);
 
     // Ends the game if either player starts with 21
@@ -147,6 +148,7 @@ function reset() {
     hidden = null;
     deck = null;
     canHit = true;
+    doubleDown = true;
 
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("player-cards").innerHTML = "";
