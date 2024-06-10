@@ -7,6 +7,7 @@ function evaluateGame() {
     canHit = false;
     let message = "";
     var playerWon = false;
+    var splitPlayerWon = false;
 
     if (playerSum > 21) { 
         message = "You Busted!";
@@ -28,11 +29,39 @@ function evaluateGame() {
         }
     }
 
+    if (splitHand) {
+        splitPlayerSum = reduceAce(splitPlayerSum, splitPlayerAceCount);
+        if (splitPlayerSum > 21) { 
+            message += " You Busted!";
+        }
+        else if (dealerSum > 21) {
+            message += " Dealer Busted!";
+            splitPlayerWon = true;
+        }
+        else {
+            if (splitPlayerSum == dealerSum) {
+                message += " Tie, Dealer Wins";
+            }
+            else if (splitPlayerSum < dealerSum) {
+                message += " You Lose.";
+            }
+            else {
+                message += " You Win.";
+                splitPlayerWon = true;
+            }
+        }
+        document.getElementById("player-split-sum").innerText = splitPlayerSum;
+    }
+
     document.getElementById("dealer-sum").innerText = dealerSum;
     document.getElementById("player-sum").innerText = playerSum;
     document.getElementById("results").innerText = message;
 
     if (playerWon) {
+        chips += 2 * bet;
+        document.getElementById("chip-count").innerText = chips;
+    }
+    if (splitPlayerWon) {
         chips += 2 * bet;
         document.getElementById("chip-count").innerText = chips;
     }

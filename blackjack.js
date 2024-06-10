@@ -1,13 +1,17 @@
 // Tracks current hand values
 var dealerSum = 0;
 var playerSum = 0;
+var splitPlayerSum = 0;
 
 // Tracked since Aces can be treated as 1 or 11
 var dealerAceCount = 0;
 var playerAceCount = 0;
+var splitPlayerAceCount = 0;
 
-// Hidden card for dealer
+// Keeping track of specific cards
 var hidden;
+var firstCardValue;
+var secondCardValue;
 
 // Deck of cards
 var deck;
@@ -19,6 +23,9 @@ var canDoubleDown = true;
 // Chip count and bid
 var chips = 1000;
 var bet = 0;
+
+var isSplit = false;
+var splitHand = false;
 
 // Sets up the deck and game
 window.onload = function() {
@@ -88,11 +95,11 @@ function setUpBoard() {
     document.getElementById("dealer-cards").append(hiddenImg)
 
     // Revealed dealer card
-    deal(true);
+    deal(true, false);
 
     // Player Starting Cards
     for (let i = 0; i < 2; i++ ) {
-        deal(false);
+        deal(false, false);
     }
 }
 
@@ -100,7 +107,7 @@ function setUpBoard() {
  * Deals a card to the dealer or player
  * @param {*} isDealer if true, deals a card to the dealer, otherwise to the player
  */
-function deal(isDealer) {
+function deal(isDealer, dealSplit) {
     let cardImg = document.createElement("img");
     let card = deck.pop();
     cardImg.src = "./card-images/" + card + ".png";
@@ -111,12 +118,25 @@ function deal(isDealer) {
         document.getElementById("dealer-cards").append(cardImg);
     }
     else {
-        if (deck.length == 49 && getValue(card) == getValue(deck.at(0))) {
-            canSplit = true;
+        if (deck.length == 49) {
+            firstCardValue = getValue(card);
+            cardImg.id = "first-card";
         }
-        playerSum += getValue(card);
-        playerAceCount += checkAce(card);
-        document.getElementById("player-cards").append(cardImg);
+        if (deck.length == 48) {
+            secondCardValue = getValue(card);
+            cardImg.id = "second-card";
+        }
+        if (!dealSplit) {
+            console.log(card);
+            playerSum += getValue(card);
+            playerAceCount += checkAce(card);
+            document.getElementById("player-cards").append(cardImg);
+        }
+        if (dealSplit) {
+            splitPlayerSum += getValue(card);
+            splitPlayerAceCount += checkAce(card);
+            document.getElementById("player-split-cards").append(cardImg);
+        }
     }
 }
 
@@ -124,6 +144,10 @@ function deal(isDealer) {
  * Allows the player to begin interacting
  */
 function startGame() {
+    if (firstCardValue == secondCardValue) {
+        canSplit = true;
+    }
+
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
     document.getElementById("split").addEventListener("click", split);
@@ -142,9 +166,13 @@ function startGame() {
  * a hand sum of at least 17
  */
 function goDealer() {
+    canHit = false;
+    canSplit = false;
+    canDoubleDown = false;
+
     document.getElementById("hidden").src = "./card-images/" + hidden + ".png";
     while (dealerSum < 17) {
-        deal(true);
+        deal(true, false);
     }
 }
 
@@ -154,8 +182,10 @@ function goDealer() {
 function reset() {
     dealerSum = 0;
     playerSum = 0;
+    splitPlayerSum = 0;
     dealerAceCount = 0;
     playerAceCount = 0;
+    splitPlayerAceCount = 0;
     hidden = null;
     deck = null;
     canHit = true;
@@ -163,6 +193,7 @@ function reset() {
 
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("player-cards").innerHTML = "";
+    document.getElementById("player-split-cards").innerHTML = "";
     document.getElementById("player-sum").innerHTML = "";
     document.getElementById("dealer-sum").innerHTML = "";
     document.getElementById("results").innerHTML = "";

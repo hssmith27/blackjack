@@ -2,10 +2,14 @@
  * Deals a card to the player
  */
 function hit() {
+    canSplit = false;
     if (canHit) {
-        deal(false);
+        deal(false, splitHand);
     }
-    if (reduceAce(playerSum, playerAceCount) > 21) {
+    if (!splitHand && reduceAce(playerSum, playerAceCount) >= 21) {
+        canHit = false;
+    }
+    else if (splitHand && reduceAce(splitPlayerSum, splitPlayerAceCount) >= 21) {
         canHit = false;
     }
 }
@@ -15,8 +19,15 @@ function hit() {
  * end the game
  */
 function stand() {
-    goDealer();
-    evaluateGame();
+    if (isSplit) {
+        isSplit = false;
+        splitHand = true;
+        canHit = true;
+    }
+    else {
+        goDealer();
+        evaluateGame();
+    }
 }
 
 /**
@@ -25,7 +36,17 @@ function stand() {
  */
 function split() {
     if (canSplit) {
-        canSplit = false;111
+        canSplit = false;
+        canDoubleDown = false;
+        document.getElementById("player-split-cards").append(document.getElementById("second-card"));
+        playerAceCount = playerAceCount / 2;
+        playerSum = playerSum / 2;
+        splitPlayerAceCount = playerAceCount;
+        splitPlayerSum = playerSum;
+        isSplit = true;
+
+        chips -= bet;
+        document.getElementById("chip-count").innerText = chips;
     }
 }
 
@@ -35,6 +56,7 @@ function split() {
  */
 function doubleDown() {
     if (canDoubleDown) {
+        canSplit = false;
         chips -= bet;
         document.getElementById("chip-count").innerText = chips;
         bet *= 2;
