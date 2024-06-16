@@ -76,6 +76,7 @@ function shuffleDeck() {
  */
 function placeBets() {
     document.getElementById("submit").onclick = function() {
+        document.getElementById("submit").style.display = "none";
         bet = document.getElementById("inputBid").value;
         chips -= bet;
         document.getElementById("chip-count").innerText = chips;
@@ -191,6 +192,7 @@ function reset() {
     canHit = true;
     canDoubleDown = true;
 
+    document.getElementById("submit").style.display = "inline";
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("player-cards").innerHTML = "";
     document.getElementById("player-split-cards").innerHTML = "";
