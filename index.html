@@ -11,23 +11,33 @@
     </head>
 
     <body>
-        <h2>Chip Count: <span id = chip-count></span></h3>
-        <h2>Dealer: <span id = "dealer-sum"></span></h2>
-        <div id = "dealer-cards" class = "cards"></div>
+        <label>Bid: </label>
+        <input id = "inputBid"><br>
+        <button id = "submit">Submit</button>
+        <div id = "chips">
+            <span id = "chip-count"></span>
+            <img src = "other-images/chip.png">
+        </div>
+        <div id = "game">
+            <h2>Dealer: <span id = "dealer-sum"></span></h2>
+            <div id = "dealer-cards" class = "cards"></div>
 
-        <h2>You: <span id = "player-sum"></span></h2>
-        <div id = "player-cards" class = "cards"></div>
+            <h2>You: <span id = "player-sum"></span></h2>
+            <div id = "player-cards" class = "cards"></div>
 
-        <h2>You (Split): <span id = "player-split-sum"></span></h2>
-        <div id = "player-split-cards" class = "cards"></div>
+            <h2>You (Split): <span id = "player-split-sum"></span></h2>
+            <div id = "player-split-cards" class = "cards"></div>
 
-        <br>
-        <button id = "hit" class = "game-action">Hit</button>
-        <button id = "stand" class = "game-action">Stand</button>
-        <button id = "split" class = "game-action">Split</button>
-        <button id = "double-down" class = "game-action">Double</button>
-        <button id = "restart" class = "game-action">Restart</button>
-        <br>
-        <p id = "results"></p>
+            <br>
+            <div id = "game-action">
+                <button id = "hit">Hit</button>
+                <button id = "stand">Stand</button>
+                <button id = "split">Split</button>
+                <button id = "double-down">Double</button>
+                <button id = "restart">Restart</button>
+            </div> 
+            <br>
+            <p id = "results"></p>
+        </div>
     </body>
 </html>

@@ -3,6 +3,7 @@
  */
 function hit() {
     canSplit = false;
+    canDoubleDown = false;
     if (canHit) {
         deal(false, splitHand);
     }
@@ -73,3 +74,4 @@ function restart() {
     reset();
     gameLoop();
 }
+

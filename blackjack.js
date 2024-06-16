@@ -32,6 +32,8 @@ window.onload = function() {
     gameLoop();
 }
 
+
+
 // Calls the main loop for the game
 function gameLoop() {
     document.getElementById("chip-count").innerText = chips;
@@ -73,12 +75,11 @@ function shuffleDeck() {
  * Prompts the user to enter their chip bid
  */
 function placeBets() {
-    bet = prompt("How many chips would you like to bet?")
-    while (bet > chips) {
-        bet = prompt("How many chips would you like to bet?")
+    document.getElementById("submit").onclick = function() {
+        bet = document.getElementById("inputBid").value;
+        chips -= bet;
+        document.getElementById("chip-count").innerText = chips;
     }
-    chips -= bet;
-    document.getElementById("chip-count").innerText = chips;
 }
 
 /**
@@ -127,7 +128,6 @@ function deal(isDealer, dealSplit) {
             cardImg.id = "second-card";
         }
         if (!dealSplit) {
-            console.log(card);
             playerSum += getValue(card);
             playerAceCount += checkAce(card);
             document.getElementById("player-cards").append(cardImg);
