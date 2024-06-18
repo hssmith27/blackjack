@@ -87,6 +87,7 @@ function placeBets() {
         chips -= bet;
         document.getElementById("chip-count").innerText = chips;
         document.getElementById("game").style.display = "inline";
+        // document.getElementById("split-hand").style.display = "none";
     }
 }
 
@@ -190,16 +191,24 @@ function reset() {
     dealerAceCount = 0;
     playerAceCount = 0;
     splitPlayerAceCount = 0;
+
     hidden = null;
     deck = null;
+
+    isSplit = false;
+    splitHand = false;
+    
     canHit = true;
     canDoubleDown = true;
+    canSplit = false;
 
+    // document.getElementById("split-hand").style.display = "none";
     document.getElementById("submit").style.display = "inline";
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("player-cards").innerHTML = "";
     document.getElementById("player-split-cards").innerHTML = "";
     document.getElementById("player-sum").innerHTML = "";
     document.getElementById("dealer-sum").innerHTML = "";
+    document.getElementById("player-split-sum").innerHTML = "";
     document.getElementById("results").innerHTML = "";
 }

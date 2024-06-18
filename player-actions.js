@@ -47,6 +47,7 @@ function split() {
         isSplit = true;
 
         // Moving split hand to separate section
+        // document.getElementById("split-hand").style.display = "inline";
         document.getElementById("player-split-cards").append(document.getElementById("second-card"));
 
         // Rebidding current bid
