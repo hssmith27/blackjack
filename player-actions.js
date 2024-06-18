@@ -37,23 +37,28 @@ function stand() {
  */
 function split() {
     if (canSplit) {
+        // Setting values for split hand
         canSplit = false;
         canDoubleDown = false;
-        document.getElementById("player-split-cards").append(document.getElementById("second-card"));
         playerAceCount = playerAceCount / 2;
         playerSum = playerSum / 2;
         splitPlayerAceCount = playerAceCount;
         splitPlayerSum = playerSum;
         isSplit = true;
 
+        // Moving split hand to separate section
+        document.getElementById("player-split-cards").append(document.getElementById("second-card"));
+
+        // Rebidding current bid
         chips -= bet;
         document.getElementById("chip-count").innerText = chips;
     }
 }
 
 /**
- * Causes the player to double down, can only be done
- * after the first dealing
+ * Causes the player to double down, doubling their bid
+ * but only dealing them one more card.
+ * Can only be done after the first dealing
  */
 function doubleDown() {
     if (canDoubleDown) {

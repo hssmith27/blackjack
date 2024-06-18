@@ -29,10 +29,15 @@ var splitHand = false;
 
 // Sets up the deck and game
 window.onload = function() {
+    // Adding functions to buttons
+    document.getElementById("hit").addEventListener("click", hit);
+    document.getElementById("stand").addEventListener("click", stand);
+    document.getElementById("split").addEventListener("click", split);
+    document.getElementById("double-down").addEventListener("click", doubleDown);
+    document.getElementById("restart").addEventListener("click", restart);
+
     gameLoop();
 }
-
-
 
 // Calls the main loop for the game
 function gameLoop() {
@@ -122,6 +127,7 @@ function deal(isDealer, dealSplit) {
         document.getElementById("dealer-cards").append(cardImg);
     }
     else {
+        // Saving first two cards dealt to player so they can be split
         if (deck.length == 49) {
             firstCardValue = getValue(card);
             cardImg.id = "first-card";
@@ -144,18 +150,13 @@ function deal(isDealer, dealSplit) {
 }
 
 /**
- * Allows the player to begin interacting
+ * Checks if the player can split, and checks if
+ * either player starts with blackjack
  */
 function startGame() {
     if (firstCardValue == secondCardValue) {
         canSplit = true;
     }
-
-    document.getElementById("hit").addEventListener("click", hit);
-    document.getElementById("stand").addEventListener("click", stand);
-    document.getElementById("split").addEventListener("click", split);
-    document.getElementById("double-down").addEventListener("click", doubleDown);
-    document.getElementById("restart").addEventListener("click", restart);
 
     // Ends the game if either player starts with 21
     if (dealerSum == 21 || playerSum == 21) {
@@ -201,10 +202,4 @@ function reset() {
     document.getElementById("player-sum").innerHTML = "";
     document.getElementById("dealer-sum").innerHTML = "";
     document.getElementById("results").innerHTML = "";
-
-    document.getElementById("hit").removeEventListener("click", hit);
-    document.getElementById("stand").removeEventListener("click", stand);
-    document.getElementById("split").removeEventListener("click", split);
-    document.getElementById("double-down").removeEventListener("click", doubleDown);
-    document.getElementById("restart").removeEventListener("click", restart);
 }
