@@ -199,4 +199,10 @@ function reset() {
     document.getElementById("player-sum").innerHTML = "";
     document.getElementById("dealer-sum").innerHTML = "";
     document.getElementById("results").innerHTML = "";
+
+    document.getElementById("hit").removeEventListener("click", hit);
+    document.getElementById("stand").removeEventListener("click", stand);
+    document.getElementById("split").removeEventListener("click", split);
+    document.getElementById("double-down").removeEventListener("click", doubleDown);
+    document.getElementById("restart").removeEventListener("click", restart);
 }
