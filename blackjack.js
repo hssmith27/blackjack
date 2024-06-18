@@ -41,6 +41,8 @@ function gameLoop() {
     shuffleDeck();
     placeBets();
     setUpBoard();
+    startGame();
+    document.getElementById("game").style.display = "none";
 }
 
 /**
@@ -79,7 +81,7 @@ function placeBets() {
         bet = document.getElementById("inputBid").value;
         chips -= bet;
         document.getElementById("chip-count").innerText = chips;
-        startGame();
+        document.getElementById("game").style.display = "inline";
     }
 }
 
