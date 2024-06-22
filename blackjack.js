@@ -1,17 +1,8 @@
-// Tracks current hand values
-var dealerSum = 0;
-var playerSum = 0;
-var splitPlayerSum = 0;
-
-// Tracked since Aces can be treated as 1 or 11
-var dealerAceCount = 0;
-var playerAceCount = 0;
-var splitPlayerAceCount = 0;
-
 // Keeping track of specific cards
 var hidden;
 var firstCardValue;
 var secondCardValue;
+var dealerCardValue;
 
 // Deck of cards
 var deck;
@@ -124,6 +115,7 @@ function deal(isDealer, dealSplit) {
 
     if (isDealer) {
         dealerSum += getValue(card);
+        dealerCardValue = getValue(card);
         dealerAceCount += checkAce(card);
         document.getElementById("dealer-cards").append(cardImg);
     }
@@ -164,6 +156,9 @@ function startGame() {
         goDealer();
         evaluateGame();
     }
+    else {
+        console.log("Recommend Move");
+    }
 }
 
 /**
@@ -187,6 +182,7 @@ function goDealer() {
 function reset() {
     dealerSum = 0;
     playerSum = 0;
+    dealerCardValue = 0;
     splitPlayerSum = 0;
     dealerAceCount = 0;
     playerAceCount = 0;

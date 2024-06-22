@@ -1,3 +1,13 @@
+// Tracks current hand values
+var dealerSum = 0;
+var playerSum = 0;
+var splitPlayerSum = 0;
+
+// Tracked since Aces can be treated as 1 or 11
+var dealerAceCount = 0;
+var playerAceCount = 0;
+var splitPlayerAceCount = 0;
+
 /**
  * Evaluates the winner of the game
  */
