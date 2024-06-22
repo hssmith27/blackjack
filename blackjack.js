@@ -157,7 +157,7 @@ function startGame() {
         evaluateGame();
     }
     else {
-        console.log("Recommend Move");
+        recommendMove();
     }
 }
 
@@ -207,4 +207,6 @@ function reset() {
     document.getElementById("dealer-sum").innerHTML = "";
     document.getElementById("player-split-sum").innerHTML = "";
     document.getElementById("results").innerHTML = "";
+    document.getElementById("recommended-move").innerHTML = "";
+
 }
