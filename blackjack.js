@@ -73,12 +73,13 @@ function shuffleDeck() {
  */
 function placeBets() {
     document.getElementById("submit").onclick = function() {
-        document.getElementById("submit").style.display = "none";
         bet = document.getElementById("inputBid").value;
-        chips -= bet;
-        document.getElementById("chip-count").innerText = chips;
-        document.getElementById("game").style.display = "inline";
-        // document.getElementById("split-hand").style.display = "none";
+        if (bet <= chips) {
+            document.getElementById("submit").style.display = "none";
+            chips -= bet;
+            document.getElementById("chip-count").innerText = chips;
+            document.getElementById("game").style.display = "inline";
+        }
     }
 }
 
