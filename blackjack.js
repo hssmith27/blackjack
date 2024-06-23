@@ -1,22 +1,41 @@
-// Keeping track of specific cards
+/**
+ * Represents the dealer's hidden card as "Value-Suit"
+ */
 var hidden;
+
+/**
+ * Numerical value of the player's first card
+ */
 var firstCardValue;
+
+/**
+ * Numerical value of the player's second card
+ */
 var secondCardValue;
+
+/**
+ * Numerical value of the dealer's revealed card
+ */
 var dealerCardValue;
 
-// Deck of cards
+/**
+ * Stores all the cards as "Value-Suit"
+ */
 var deck;
 
-// Chip count and bid
+/**
+ * Total chip count of the player
+ */
 var chips = 1000;
-var bet = 0;
 
-var isSplit = false;
-var splitHand = false;
+/**
+ * The bid on the current hand
+ */
+var bet = 0;
 
 // Sets up the deck and game
 window.onload = function() {
-    // Adding functions to buttons
+    // Adding functionality to buttons
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stand").addEventListener("click", stand);
     document.getElementById("split").addEventListener("click", split);
@@ -26,10 +45,13 @@ window.onload = function() {
     gameLoop();
 }
 
-// Calls the main loop for the game
+/**
+ * Calls the main loop for the game
+ */
 function gameLoop() {
     document.getElementById("chip-count").innerText = chips;
     document.getElementById("game").style.display = "none";
+
     buildDeck();
     shuffleDeck();
     placeBets();
@@ -68,14 +90,15 @@ function shuffleDeck() {
 function placeBets() {
     document.getElementById("submit").onclick = function() {
         bet = document.getElementById("inputBid").value;
+
         if (bet <= chips) {
             chips -= bet;
             document.getElementById("chip-count").innerText = chips;
-            document.getElementById("game").style.display = "inline";
-            document.getElementById("split-hand").style.display = "none";
             document.getElementById("submit").style.display = "none";
         }
-
+        
+        // Added here to prevent game evaluation from happening before
+        // bids were placed
         setUpBoard();
         startGame();
     }
@@ -85,6 +108,9 @@ function placeBets() {
  * Sets up the board by dealing the player and dealer two cards each
  */ 
 function setUpBoard() {
+    document.getElementById("game").style.display = "inline";
+    document.getElementById("split-hand").style.display = "none";
+
     // Hidden dealer card
     let hiddenImg = document.createElement("img");
     hiddenImg.src = "./card-images/BACK.png";
@@ -110,7 +136,8 @@ function setUpBoard() {
 function deal(isDealer, dealSplit) {
     let cardImg = document.createElement("img");
     let card = deck.pop();
-    // For testing
+    // For testing - REMOVE LATER
+    // let card;
     // if (deck.length != 50 && deck.length != 49) {
     //     card = deck.pop();
     // }
@@ -154,7 +181,7 @@ function deal(isDealer, dealSplit) {
 }
 
 /**
- * Checks if the player can split, and checks if
+ * Checks if the player can split and checks if
  * either player starts with blackjack
  */
 function startGame() {

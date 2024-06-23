@@ -1,4 +1,6 @@
-// List of recommended moves accessed by player hand then dealer card
+/**
+ * List of recommended moves accessed by player hand then dealer card
+ */
 const aceRecommendations = new Map([
     [13, new Map([
         [2, "Hit"], [3, "Hit"], [4, "Hit"], [5, "Double Down"], [6, "Double Down"], [7, "Hit"], [8, "Hit"], [9, "Hit"], [10, "Hit"], [11, "Hit"]
@@ -20,7 +22,9 @@ const aceRecommendations = new Map([
     ])]
 ]);
 
-// List of recommended moves when splitting is an option
+/**
+ * List of recommended moves when splitting is an option
+ */
 const splitRecommendations = new Map([
     [4, new Map([
         [2, "Hit"], [3, "Hit"], [4, "Split"], [5, "Split"], [6, "Split"], [7, "Split"], [8, "Hit"], [9, "Hit"], [10, "Hit"], [11, "Hit"]
@@ -42,6 +46,9 @@ const splitRecommendations = new Map([
     ])]
 ])
 
+/**
+ * List of recommended moves when no aces are involved
+ */
 const nonAceRecommendations = new Map([
     [9, new Map([
         [2, "Hit"], [3, "Double Down"], [4, "Double Down"], [5, "Double Down"], [6, "Double Down"], [7, "Hit"], [8, "Hit"], [9, "Hit"], [10, "Hit"], [11, "Hit"]
@@ -66,6 +73,9 @@ const nonAceRecommendations = new Map([
     ])]
 ])
 
+/**
+ * Recommends a move to the player by updating the UI
+ */
 function recommendMove() {
     var recommendation;
     if (playerAceCount > 0) {
@@ -77,6 +87,10 @@ function recommendMove() {
     document.getElementById("recommended-move").innerText = recommendation;
 }
 
+/**
+ * Recommends a move when the player has an ace
+ * @returns the recommended move
+ */
 function recommendMoveAce() {
     if (playerAceCount == 2) {
         return "Split"
@@ -89,6 +103,10 @@ function recommendMoveAce() {
     }
 }
 
+/**
+ * Recommends a move when the player has no ace
+ * @returns the recommended move
+ */
 function recommendMoveNoAce() {
     if (playerSum <= 8) {
         return "Hit";

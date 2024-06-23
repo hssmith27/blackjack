@@ -1,7 +1,32 @@
+/**
+ * Controls whether the player can hit
+ */
 var canHit = true;
+
+/**
+ * Controls whether the player can split
+ */
 var canSplit = false;
+
+/**
+ * Controls whether the player can double down
+ */
 var canDoubleDown = true;
+
+/**
+ * Controls whether the player can stand
+ */
 var canStand = true;
+
+/**
+ * Dictates whether dealing to the split hand
+ */
+var isSplit = false;
+
+/**
+ * Used for evaluating the split hand
+ */
+var splitHand = false;
 
 /**
  * Deals a card to the player

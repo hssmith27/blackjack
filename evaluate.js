@@ -1,11 +1,31 @@
-// Tracks current hand values
+/**
+ * Current sum of dealer's hand
+ */
 var dealerSum = 0;
+
+/**
+ * Current sum of the player's hand
+ */
 var playerSum = 0;
+
+/**
+ * Current sum of the split hand
+ */
 var splitPlayerSum = 0;
 
-// Tracked since Aces can be treated as 1 or 11
+/**
+ * Current number of aces the dealer has
+ */
 var dealerAceCount = 0;
+
+/**
+ * Current number of aces the player has
+ */
 var playerAceCount = 0;
+
+/**
+ * Current number of aces the split hand has
+ */
 var splitPlayerAceCount = 0;
 
 /**

@@ -2,29 +2,30 @@
 <html>
     <head>
         <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <meta name = "viewport" content = "height = device-height, width = device-width, initial-scale = 1.0">
         <title>Blackjack</title>
-        <link rel="stylesheet" href = "blackjack.css">
-        <script src = "blackjack.js"></script>
-        <script src = "player-actions.js"></script>
-        <script src = "evaluate.js"></script>
-        <script src = "recommender.js"></script>
+        <link rel="stylesheet" href = "blackjack.css"> 
     </head>
 
     <body>
         <label>Bid: </label>
         <input id = "inputBid">
         <button id = "submit">Submit</button>
+
         <div id = "chips">
             <span id = "chip-count"></span>
             <img src = "other-images/chip.png">
         </div>
+        
         <div id = "game">
             <h2>Dealer: <span id = "dealer-sum"></span></h2>
             <div id = "dealer-cards" class = "cards"></div>
+
             <h2>Recommended First Move: <span id = "recommended-move"></span></h2>
+
             <h2>You: <span id = "player-sum"></span></h2>
             <div id = "player-cards" class = "cards"></div>
+
             <div id = "split-hand">
                 <h2>You (Split): <span id = "player-split-sum"></span></h2>
                 <div id = "player-split-cards" class = "cards"></div>
@@ -38,8 +39,12 @@
                 <button id = "double-down">Double</button>
                 <button id = "restart">Restart</button>
             </div> 
-            <br>
-            <p id = "results"></p>
+            <h1 id = "results"></p>
         </div>
+
+        <script src = "blackjack.js"></script>
+        <script src = "player-actions.js"></script>
+        <script src = "evaluate.js"></script>
+        <script src = "recommender.js"></script>
     </body>
 </html>
