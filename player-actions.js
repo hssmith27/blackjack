@@ -1,3 +1,8 @@
+var canHit = true;
+var canSplit = false;
+var canDoubleDown = true;
+var canStand = true;
+
 /**
  * Deals a card to the player
  */
@@ -20,14 +25,16 @@ function hit() {
  * end the game
  */
 function stand() {
-    if (isSplit) {
-        isSplit = false;
-        splitHand = true;
-        canHit = true;
-    }
-    else {
-        goDealer();
-        evaluateGame();
+    if (canStand) {
+        if (isSplit) {
+            isSplit = false;
+            splitHand = true;
+            canHit = true;
+        }
+        else {
+            goDealer();
+            evaluateGame();
+        }
     }
 }
 
@@ -47,8 +54,8 @@ function split() {
         isSplit = true;
 
         // Moving split hand to separate section
-        // document.getElementById("split-hand").style.display = "inline";
         document.getElementById("player-split-cards").append(document.getElementById("second-card"));
+        document.getElementById("split-hand").style.display = "inline";
 
         // Rebidding current bid
         chips -= bet;

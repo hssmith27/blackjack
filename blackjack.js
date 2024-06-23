@@ -7,10 +7,6 @@ var dealerCardValue;
 // Deck of cards
 var deck;
 
-var canHit = true;
-var canSplit = false;
-var canDoubleDown = true;
-
 // Chip count and bid
 var chips = 1000;
 var bet = 0;
@@ -33,12 +29,10 @@ window.onload = function() {
 // Calls the main loop for the game
 function gameLoop() {
     document.getElementById("chip-count").innerText = chips;
+    document.getElementById("game").style.display = "none";
     buildDeck();
     shuffleDeck();
     placeBets();
-    setUpBoard();
-    startGame();
-    document.getElementById("game").style.display = "none";
 }
 
 /**
@@ -75,11 +69,15 @@ function placeBets() {
     document.getElementById("submit").onclick = function() {
         bet = document.getElementById("inputBid").value;
         if (bet <= chips) {
-            document.getElementById("submit").style.display = "none";
             chips -= bet;
             document.getElementById("chip-count").innerText = chips;
             document.getElementById("game").style.display = "inline";
+            document.getElementById("split-hand").style.display = "none";
+            document.getElementById("submit").style.display = "none";
         }
+
+        setUpBoard();
+        startGame();
     }
 }
 
@@ -112,6 +110,18 @@ function setUpBoard() {
 function deal(isDealer, dealSplit) {
     let cardImg = document.createElement("img");
     let card = deck.pop();
+    // For testing
+    // if (deck.length != 50 && deck.length != 49) {
+    //     card = deck.pop();
+    // }
+    // else {
+    //     if (deck.length == 50) {
+    //         card = deck.splice(deck.indexOf("2-D"), 1)[0];
+    //     }
+    //     else {
+    //         card = deck.splice(deck.indexOf("2-H"), 1)[0];
+    //     }
+    // }
     cardImg.src = "./card-images/" + card + ".png";
 
     if (isDealer) {
@@ -198,8 +208,8 @@ function reset() {
     canHit = true;
     canDoubleDown = true;
     canSplit = false;
+    canStand = true;
 
-    // document.getElementById("split-hand").style.display = "none";
     document.getElementById("submit").style.display = "inline";
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("player-cards").innerHTML = "";
@@ -209,5 +219,4 @@ function reset() {
     document.getElementById("player-split-sum").innerHTML = "";
     document.getElementById("results").innerHTML = "";
     document.getElementById("recommended-move").innerHTML = "";
-
 }

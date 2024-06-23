@@ -82,7 +82,7 @@ function recommendMoveAce() {
         return "Split"
     }
     else {
-        if (playerSum == 19) {
+        if (playerSum >= 19) {
             return "Stand";
         }
         return aceRecommendations.get(playerSum).get(dealerCardValue)
@@ -90,7 +90,7 @@ function recommendMoveAce() {
 }
 
 function recommendMoveNoAce() {
-    if (playerSum == 8) {
+    if (playerSum <= 8) {
         return "Hit";
     }
     if (playerSum == 11) {

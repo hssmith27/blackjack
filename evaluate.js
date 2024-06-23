@@ -15,6 +15,7 @@ function evaluateGame() {
     dealerSum = reduceAce(dealerSum, dealerAceCount);
     playerSum = reduceAce(playerSum, playerAceCount);
     canHit = false;
+    canStand = false;
     let message = "";
     var playerWon = false;
     var splitPlayerWon = false;
@@ -28,13 +29,13 @@ function evaluateGame() {
     }
     else {
         if (playerSum == dealerSum) {
-            message = "Tie, Dealer Wins";
+            message = "Tie, Dealer Wins!";
         }
         else if (playerSum < dealerSum) {
-            message = "You Lose.";
+            message = "You Lose!";
         }
         else {
-            message = "You Win.";
+            message = "You Win!";
             playerWon = true;
         }
     }
@@ -42,7 +43,7 @@ function evaluateGame() {
     if (splitHand) {
         splitPlayerSum = reduceAce(splitPlayerSum, splitPlayerAceCount);
         if (splitPlayerSum > 21) { 
-            message += " You Busted!";
+            message += " Your Split Busted!";
         }
         else if (dealerSum > 21) {
             message += " Dealer Busted!";
@@ -50,13 +51,13 @@ function evaluateGame() {
         }
         else {
             if (splitPlayerSum == dealerSum) {
-                message += " Tie, Dealer Wins";
+                message += " Your Split Tied, Dealer Wins!";
             }
             else if (splitPlayerSum < dealerSum) {
-                message += " You Lose.";
+                message += " Your Split Lost!";
             }
             else {
-                message += " You Win.";
+                message += " Your Split Won!";
                 splitPlayerWon = true;
             }
         }
